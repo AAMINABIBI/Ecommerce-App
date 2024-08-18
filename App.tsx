@@ -1,10 +1,15 @@
-import React from 'react';
-import Main from './app/components/Main';
+import React, { Component } from 'react'
+import { Text, View } from 'react-native'
 
-const App = () => {
+export class App extends Component {
+  render() {
     return (
-        <Main />
-    );
-};
+      <View>
+        <Text> textInComponent </Text>
+      </View>
+    )
+  }
+}
 
-export default App;
+export default App
+
