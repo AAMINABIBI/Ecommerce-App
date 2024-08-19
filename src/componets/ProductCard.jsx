@@ -1,44 +1,42 @@
-import React, { useState } from 'react'
-import { TouchableOpacity } from 'react-native'
-import { Text } from 'react-native'
-import { Image, StyleSheet, View } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import React from 'react'
+import { TouchableOpacity, Text, Image, StyleSheet, View } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
-const ProductCard = ({isLiked,setisLiked}) => {
-    // const [isLiked, setIsLiked] = useState(false);
-
-    // const toggleLike = () => {
-    //     setIsLiked(!isLiked); // Toggle the liked state
-    // };
+const ProductCard = ({ item, handleLiked }) => {
+    const navigation = useNavigation();
 
     return (
-        <View style={styles.container}>
-            <Image source={require('./assets/girl1.jpeg')}
-                style={styles.coverImage} />
+        <TouchableOpacity 
+            style={styles.container} 
+            onPress={() => navigation.navigate('PRODUCT_DETAILS', { item })}
+        >
+            <Image 
+                source={{ uri: item.image }} 
+                style={styles.coverImage} 
+            />
 
-            <View style={styles.content}>
-                <Text style={styles.title}>Jacket</Text>
-                <Text style={styles.price}>$99.99</Text>
+            <View style={styles.contentContainer}>
+                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.price}>${item.price}</Text>
             </View>
 
-            <TouchableOpacity onPress={()=>{
-                setisLiked(!isLiked)
-            }} style={styles.LikeContainer}>
-                {isLiked ? (
-                    <AntDesign name="heart" size={20} color="#E55B5B" />
-                ) : (
-                    <AntDesign name="hearto" size={20} color="#E55B5B" />
-                )}
-            </TouchableOpacity>
-        </View>
+            <View style={styles.LikeContainer}>
+                <TouchableOpacity onPress={() => handleLiked(item)}>
+                    {item?.isLiked ? (
+                        <AntDesign name="hearto" size={20} color="#E55B5B" />
+                    ) : (
+                        <AntDesign name="heart" size={20} color="#E55B5B" />
+                    )}
+                </TouchableOpacity>
+            </View>
+        </TouchableOpacity>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // borderWidth: 1,
-        // borderColor: 'black'
     },
     coverImage: {
         height: 256,
@@ -57,9 +55,6 @@ const styles = StyleSheet.create({
         color: '#9C9C9C',
         fontWeight: '600'
     },
-    content: {
-        paddingLeft: 15
-    },
     LikeContainer: {
         height: 34,
         width: 34,
@@ -70,6 +65,9 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 20,
         right: 20
+    },
+    contentContainer:{
+        padding: 10,
     }
 })
 

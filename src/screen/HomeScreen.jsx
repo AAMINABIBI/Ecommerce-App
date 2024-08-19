@@ -6,58 +6,77 @@ import Header from '../componets/Header';
 import Catogory from '../componets/Catogory';
 import { FlatList } from 'react-native';
 import ProductCard from '../componets/ProductCard';
+import data from '../data/data.json'
 
 const catagories = ['Trending Now', 'All', 'New', 'Men', 'Women']
 const HomeScreen = () => {
-    const [selectedCategory, setSelectedCategory] = useState(null)
-const [isLiked,setisLiked]=useState(false)
+
+    const [products, setProducts] = useState(data.products)
+    const [selectedCategory, setSelectedCategory] = useState('Men')
+
+    const handleLiked = (item) => {
+        const newProducts = products.map((prod) => {
+            if (prod.id === item.id) {
+                return {
+                    ...prod,
+                    isLiked: true,
+                };
+            }
+            return prod;
+        });
+        setProducts(newProducts);
+    }
+
     return (
         <View style={styles.container}>
+
+
             <Header />
-           
-
-          
-            
-            {/* <Catogory/> */}
             {/* Product list */}
-           
-            <FlatList data={[1,2,3,4,5,6]}
-            renderItem={({item,index})=>(
-            <ProductCard
-            item={item} isLiked={isLiked}
-            setisLiked={setisLiked}
-            />
-    
-     ) }
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{
-                paddingBottom:150
-            }}
-            numColumns={2}
-            ListHeaderComponent={
-                <>
-                 <Text style={styles.matchText}>Match Your Style</Text>
-                  {/* input container */}
-            <View style={styles.inputContainer}>
-                <View style={styles.iconContainer}>
-                    <Fontisto name={"search"} size={26} color={'white'} />
-                </View>
-                <TextInput style={styles.ttextInput} placeholder='Search'></TextInput>
-            </View>
 
-                {/* category section */}
             <FlatList
-                data={catagories}
-                renderItem={({ item }) => (
-                    <Catogory item={item}
-                        selectedCategory={selectedCategory}
-                        setSelectedCategory={setSelectedCategory} />
+
+                numColumns={2}
+                ListHeaderComponent={
+                    <>
+                        <Text style={styles.matchText}>Match Your Style</Text>
+                        {/* input container */}
+                        <View style={styles.inputContainer}>
+                            <View style={styles.iconContainer}>
+                                <Fontisto name={"search"} size={26} 
+                                color={'white'} />
+                            </View>
+                            <TextInput style={styles.ttextInput} 
+                            placeholder='Search'></TextInput>
+                        </View>
+
+                        {/* category section */}
+                        <FlatList
+                            data={catagories}
+                            renderItem={({ item }) => (
+                                <Catogory item={item}
+                                    selectedCategory={selectedCategory}
+                                    setSelectedCategory={setSelectedCategory} />
+                            )}
+                            keyExtractor={(item) => item}
+                            horizontal={true}
+                            showsHorizontalScrollIndicator={false} />
+                    </>
+                }
+                data={products}
+                renderItem={({ item, index }) => (
+                    <ProductCard
+                        item={item} handleLiked=
+                        {handleLiked}
+                    />
+
                 )}
-                keyExtractor={(item) => item}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false} />
-                </>
-            }
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{
+                    paddingBottom: 150
+                }}
+
+
             />
             {/* <View style={{
                 flexDirection:'row'

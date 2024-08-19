@@ -8,8 +8,12 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';  // Correct
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';  // Correct import
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';  // Correct import
 import { pink100 } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ProductDetailsScree from './src/screen/ProductDetailsScreen';
+
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 function Home() {
     return (
@@ -17,6 +21,23 @@ function Home() {
             <Text>Home</Text>
         </View>
     );
+}
+
+const myHomeStack=()=>{
+    return(
+        <Stack.Navigator screenOptions={
+            {
+                headerShown:false
+            }
+        }
+        initialRouteName=''
+        >
+        <Stack.Screen name="HOME" component={HomeScreen} />
+        <Stack.Screen name="PRODUCT_DETAILS"
+         component={ProductDetailsScree} />
+
+      </Stack.Navigator>
+    )
 }
 
 const App = () => {
@@ -28,8 +49,8 @@ const App = () => {
                 tabBarActiveTintColor:'pink'
             }}>
                 <Tab.Screen
-                    name="Home"
-                    component={HomeScreen}
+                    name="HOME_STACK"
+                    component={myHomeStack}
                     options={{
                         tabBarIcon: ({ size, color, focused }) => {
                             return <Entypo name={"home"} size={size} color={color}/>
