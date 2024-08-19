@@ -4,12 +4,12 @@ import { Text } from 'react-native'
 import { Image, StyleSheet, View } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
-const ProductCard = () => {
-    const [isLiked, setIsLiked] = useState(false);
+const ProductCard = ({isLiked,setisLiked}) => {
+    // const [isLiked, setIsLiked] = useState(false);
 
-    const toggleLike = () => {
-        setIsLiked(!isLiked); // Toggle the liked state
-    };
+    // const toggleLike = () => {
+    //     setIsLiked(!isLiked); // Toggle the liked state
+    // };
 
     return (
         <View style={styles.container}>
@@ -21,7 +21,9 @@ const ProductCard = () => {
                 <Text style={styles.price}>$99.99</Text>
             </View>
 
-            <TouchableOpacity onPress={toggleLike} style={styles.LikeContainer}>
+            <TouchableOpacity onPress={()=>{
+                setisLiked(!isLiked)
+            }} style={styles.LikeContainer}>
                 {isLiked ? (
                     <AntDesign name="heart" size={20} color="#E55B5B" />
                 ) : (

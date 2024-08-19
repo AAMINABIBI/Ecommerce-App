@@ -10,13 +10,34 @@ import ProductCard from '../componets/ProductCard';
 const catagories = ['Trending Now', 'All', 'New', 'Men', 'Women']
 const HomeScreen = () => {
     const [selectedCategory, setSelectedCategory] = useState(null)
-
+const [isLiked,setisLiked]=useState(false)
     return (
         <View style={styles.container}>
             <Header />
-            <Text style={styles.matchText}>Match Your Style</Text>
+           
 
-            {/* input container */}
+          
+            
+            {/* <Catogory/> */}
+            {/* Product list */}
+           
+            <FlatList data={[1,2,3,4,5,6]}
+            renderItem={({item,index})=>(
+            <ProductCard
+            item={item} isLiked={isLiked}
+            setisLiked={setisLiked}
+            />
+    
+     ) }
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{
+                paddingBottom:150
+            }}
+            numColumns={2}
+            ListHeaderComponent={
+                <>
+                 <Text style={styles.matchText}>Match Your Style</Text>
+                  {/* input container */}
             <View style={styles.inputContainer}>
                 <View style={styles.iconContainer}>
                     <Fontisto name={"search"} size={26} color={'white'} />
@@ -24,7 +45,7 @@ const HomeScreen = () => {
                 <TextInput style={styles.ttextInput} placeholder='Search'></TextInput>
             </View>
 
-            {/* category section */}
+                {/* category section */}
             <FlatList
                 data={catagories}
                 renderItem={({ item }) => (
@@ -35,22 +56,16 @@ const HomeScreen = () => {
                 keyExtractor={(item) => item}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false} />
-            {/* <Catogory/> */}
-            {/* Product list */}
-            <View style={{
+                </>
+            }
+            />
+            {/* <View style={{
                 flexDirection:'row'
             }}>
                 <ProductCard/>
                 <ProductCard/>
 
-            </View>
-            <View style={{
-                flexDirection:'row'
-            }}>
-                <ProductCard/>
-                <ProductCard/>
-
-            </View>
+            </View> */}
         </View>
     );
 }
