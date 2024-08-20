@@ -10,6 +10,7 @@ import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';  // Correct i
 import { pink100 } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProductDetailsScree from './src/screen/ProductDetailsScreen';
+import CartScreen from './src/screen/CartScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -30,7 +31,7 @@ const myHomeStack=()=>{
                 headerShown:false
             }
         }
-        initialRouteName=''
+        initialRouteName='CART'
         >
         <Stack.Screen name="HOME" component={HomeScreen} />
         <Stack.Screen name="PRODUCT_DETAILS"
@@ -63,14 +64,15 @@ const App = () => {
                         return <MaterialIcons name={"reorder"} size={size} color={color}/>
                     }
                 }}/>
-                <Tab.Screen name="Cart" component={Home}
+                <Tab.Screen name="Cart" component={CartScreen}
                  options={{
                     tabBarIcon: ({ size, color, focused }) => {
                         return <MaterialCommunityIcons
                          name={"cart"} size={size} color={color}/>
                     }
                 }} />
-                <Tab.Screen name="reorder" component={Home}
+                <Tab.Screen name="reorder" 
+                component={Home}
                   options={{
                     tabBarIcon: ({ size, color, focused }) => {
                         return <FontAwesome6

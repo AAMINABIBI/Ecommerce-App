@@ -7,13 +7,13 @@ const ProductCard = ({ item, handleLiked }) => {
     const navigation = useNavigation();
 
     return (
-        <TouchableOpacity 
-            style={styles.container} 
+        <TouchableOpacity
+            style={styles.container}
             onPress={() => navigation.navigate('PRODUCT_DETAILS', { item })}
         >
-            <Image 
-                source={{ uri: item.image }} 
-                style={styles.coverImage} 
+            <Image
+                source={{ uri: item.image }}
+                style={styles.coverImage}
             />
 
             <View style={styles.contentContainer}>
@@ -24,9 +24,11 @@ const ProductCard = ({ item, handleLiked }) => {
             <View style={styles.LikeContainer}>
                 <TouchableOpacity onPress={() => handleLiked(item)}>
                     {item?.isLiked ? (
-                        <AntDesign name="hearto" size={20} color="#E55B5B" />
+                        <AntaDesign name="heart" size={20} color="#E55B5B" />
+
                     ) : (
-                        <AntDesign name="heart" size={20} color="#E55B5B" />
+                        <AntDesign name="hearto" size={20} color="#E55B5B" />
+
                     )}
                 </TouchableOpacity>
             </View>
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
         top: 20,
         right: 20
     },
-    contentContainer:{
+    contentContainer: {
         padding: 10,
     }
 })
