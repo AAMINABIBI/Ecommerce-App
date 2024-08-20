@@ -2,24 +2,29 @@ import React from 'react'
 import { Image, StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
 const imageurl = 'https://res.cloudinary.com/dlc5c1ycl/image/upload/v1710567612/qichw3wrcioebkvzudib.png'
-const CartCard = () => {
+const CartCard = ({item,deleteItemfromCart}) => {
     return (
         <View style={styles.container}>
-            <Image source={{ uri: imageurl }}
+            <Image source={{ uri: item.image }}
                 style={styles.coverImage} />
             <View style={styles.cardContaier}>
-                <Text style={styles.title}>Jacket</Text>
-                <Text style={styles.price}>$236782</Text>
+                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.price}>${item.price}</Text>
                 <View style={styles.circlesizecontainer}>
-                    <View style={styles.circle} />
+                    <View style={[styles.circle,  {backgroundColor:item.color}]} />
                     <View style={styles.sizeCircle}>
-                        <Text style={styles.sizetext}>L</Text>
+                        <Text style={styles.sizetext}>{item.size}</Text>
                     </View>
                 </View>
             </View>
         
-            <FontAwesome6 name={'trash'} color={"#F68CBC"}
+        <TouchableOpacity onPress={()=>{
+            deleteItemfromCart(item);
+        }}>
+             <FontAwesome6 name={'trash'} color={"#F68CBC"}
                 size={25} />
+        </TouchableOpacity>
+           
           
            
 
@@ -57,7 +62,7 @@ const styles = StyleSheet.create({
         height: 32,
         width: 32,
         borderRadius: 16,
-        backgroundColor: '#7094C1'
+     
     },
     circlesizecontainer: {
         flexDirection: 'row',

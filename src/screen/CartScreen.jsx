@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Header from '../componets/Header'
 import CartCard from '../componets/CartCard'
+import { CartContext } from '../context/CartContext'
 
 const CartScreen = () => {
+const {carts,totalPrice,deleteItemfromCart}=useContext(CartContext)
+
   return (
     <View style={styles.container}>  
     <View style={styles.headerContainer}>
@@ -12,20 +15,21 @@ const CartScreen = () => {
         </View> 
 
 
-<FlatList data={[1,2,3,4,5,6]}
+<FlatList data={carts}
 ListHeaderComponent={
     <>
  
     </>
 }
-renderItem={CartCard}
+renderItem={({item})=>(<CartCard item={item}
+deleteItemfromCart={deleteItemfromCart}/>)}
 
 ListFooterComponent={
     <>
        <View style={styles.priceContainer}>
     <View style={styles.priceAndTitle}> 
          <Text style={styles.text}>Total:</Text>
-         <Text style={styles.text}>$687</Text>
+         <Text style={styles.text}>${totalPrice}</Text>
     </View>
    <View style={styles.priceAndTitle}>
     <Text style={styles.text}>Shopping</Text>
@@ -37,7 +41,7 @@ ListFooterComponent={
 <View style={styles.divider}/>
 <View style={styles.priceAndTitle}>
     <Text style={styles.text}>Grand Total</Text>
-<Text style={[styles.text,{color:'black',fontWeight:'700'}]}>$276</Text>
+<Text style={[styles.text,{color:'black',fontWeight:'700'}]}>${totalPrice}</Text>
    </View>
     </>
 }
