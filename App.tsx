@@ -1,121 +1,42 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Text, View } from 'react-native';
 import HomeScreen from './src/screen/HomeScreen';
-import Entypo from 'react-native-vector-icons/Entypo';  // Correct import
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';  // Correct import
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';  // Correct import
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';  // Correct import
-import { pink100 } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
+import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProductDetailsScree from './src/screen/ProductDetailsScreen';
 import CartScreen from './src/screen/CartScreen';
 import { CartContext, CartProvider } from './src/context/CartContext';
-
+import SplashScreen from 'react-native-splash-screen';
+import LoginPage from './src/screen/login&Register/Login';
+import RegisterPage from './src/screen/login&Register/Register';
+import EApp from './EApp'; // Adjust the path as necessary
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-function Home() {
-    return (
-        <View>
-            <Text>Home</Text>
-        </View>
-    );
-}
-
-const MyHomeStack = () => {
-    return (
-        <Stack.Navigator screenOptions={
-            {
-                headerShown: false
-            }
-        }
-            initialRouteName=''
-        >
-            <Stack.Screen name="HOME" component={HomeScreen} />
-            <Stack.Screen name="PRODUCT_DETAILS"
-                component={ProductDetailsScree} />
-
-        </Stack.Navigator>
-    )
-}
-
 const App = () => {
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            SplashScreen.hide();
+        }, 900);
+
+        // Clean up the timer if the component unmounts
+        return () => clearTimeout(timer);
+    }, []); // Empty dependency array to run only once
+
     return (
-
-        <CartProvider>
-            <NavigationContainer>
-                <Tab.Navigator screenOptions={{
-                    headerShown: false,
-                    tabBarShowLabel: false,
-                    tabBarActiveTintColor: 'pink'
-                }}>
-                    <Tab.Screen
-                        name="HOME_STACK"
-                        component={MyHomeStack}
-                        options={{
-                            tabBarIcon: ({ size, color, focused }) => {
-                                return <Entypo name={"home"} size={size} color={color} />
-                            }
-                        }}
-                    />
-                    <Tab.Screen name="Reorder" component={Home}
-                        options={{
-                            tabBarIcon: ({ size, color, focused }) => {
-                                return <MaterialIcons name={"reorder"} size={size} color={color} />
-                            }
-                        }} />
-                    <Tab.Screen name="Cart" component={CartScreen}
-                        options={{
-                            tabBarIcon: ({ size, color }) => {
-                                const { carts } = useContext(CartContext)
-                                return (
-                                    <View style={{
-                                        position: 'relative'
-                                    }}>
-
-                                        <MaterialCommunityIcons
-                                            name={"cart"}
-                                            size={size}
-                                            color={color}
-
-                                        />
-                                        <View style={{
-                                            height: 14,
-                                            width: 14,
-                                            borderRadius: 7,
-                                            backgroundColor: color,
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            position: 'absolute',
-                                            top: -10,
-                                            right: -5
-
-                                        }} >
-                                            <Text style={{
-                                                fontSize: 10,
-                                                color: 'white',
-                                                fontWeight: '500'
-
-                                            }} >{carts.length}</Text>
-                                        </View>
-                                    </View>
-                                );
-                            }
-                        }} />
-                    <Tab.Screen name="reorder"
-                        component={Home}
-                        options={{
-                            tabBarIcon: ({ size, color, focused }) => {
-                                return <FontAwesome6
-                                    name={"user"} size={size} color={color} />
-                            }
-                        }} />
-                </Tab.Navigator>
-            </NavigationContainer>
-        </CartProvider>
+        <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Stack.Screen name='Login' component={LoginPage} />
+                <Stack.Screen name='Register' component={RegisterPage} />
+                <Stack.Screen name='EApp' component={EApp} />
+            </Stack.Navigator>
+        </NavigationContainer>
     );
 }
 
